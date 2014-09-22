@@ -12,3 +12,7 @@ Analyze to
 
  - [Qiita](http://qiita.com/numa08)
  - [Hatena blog](http://numa08.hateblo.jp/)
+
+Analyzer is
+
+ - Google Analytics
