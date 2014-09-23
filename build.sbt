@@ -11,7 +11,15 @@ libraryDependencies += "com.typesafe.akka" % "akka-actor_2.11" % "2.3.3"
 
 // analyzers
 libraryDependencies ++= Seq(
-  "com.google.api-client" % "google-api-client" % "1.18.0-rc"
+  "com.google.apis" % "google-api-services-analytic" % "v3-rev100-1.19.0"
 )
 
 // reporters
+libraryDependencies ++= Seq(
+  "org.twitter4j" % "twitter4j" % "4.0.2"
+)
+
+// configure
+libraryDependencies ++= Seq(
+  "com.twitter" % "util-eval_2.10" % "6.20.0"
+)
