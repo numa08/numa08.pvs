@@ -3,22 +3,27 @@ package net.numa08.google_analytics
 import java.util.Date
 
 import akka.actor.Actor
-import akka.actor.Actor.Receive
 import com.google.api.services.analytics.Analytics
-import net.numa08.analyzer.{PVAnalyzer,PVAnalyzerResult}
+import net.numa08.analyzer.{PVAnalyzer, PVAnalyzerResult}
+import org.apache.commons.lang3.time.DateUtils
 
 class GoogleAnalyticsAnalyzer extends PVAnalyzer {
   def analyze(identifiers : List[String]) : List[Either[Throwable, PVAnalyzerResult]] = ???
 }
 
-sealed class Analyzer extends Actor {
+sealed class Analyzer extends Actor with AnalyticsQuery {
   override def receive: Receive = {
     case Analyze(analytics, id) => {
 
     }
   }
-
   case class Analyze(analytics : Analytics, id : String)
+
+  override def startDate: Date = targetDate
+
+  override def endDate: Date = targetDate
+
+  private val targetDate = DateUtils.addDays(new Date(), -1)
 }
 
 protected trait AnalyticsQuery {

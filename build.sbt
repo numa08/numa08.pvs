@@ -7,7 +7,10 @@ scalaVersion := "2.11.1"
 // Change this to another test framework if you prefer
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test"
 
-libraryDependencies += "com.typesafe.akka" % "akka-actor_2.11" % "2.3.3"
+libraryDependencies ++= Seq(
+  "com.typesafe.akka" % "akka-actor_2.11" % "2.3.3",
+  "org.apache.commons" % "commons-lang3" % "3.3.2"
+)
 
 // analyzers
 libraryDependencies ++= Seq(
