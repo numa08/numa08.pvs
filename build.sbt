@@ -11,7 +11,7 @@ libraryDependencies += "com.typesafe.akka" % "akka-actor_2.11" % "2.3.3"
 
 // analyzers
 libraryDependencies ++= Seq(
-  "com.google.apis" % "google-api-services-analytic" % "v3-rev100-1.19.0"
+  "com.google.apis" % "google-api-services-analytics" % "v3-rev100-1.19.0"
 )
 
 // reporters
