@@ -1,5 +1,8 @@
 package net.numa08.google_analytics
 
+import scala.util.control.Exception._
+import scala.collection.JavaConversions._
+
 import java.util.Date
 
 import akka.actor.Actor
@@ -13,8 +16,11 @@ class GoogleAnalyticsAnalyzer extends PVAnalyzer {
 
 sealed class Analyzer extends Actor with AnalyticsQuery {
   override def receive: Receive = {
-    case Analyze(analytics, id) => {
-
+    case Analyze(analytics, id) => allCatch either {
+      val gaData = analytics.data().ga().get(queryById(id), startDateQuery, endDateQuery, metrics).execute()
+      val pv = gaData.getRows.head.head.toInt
+      val result = PVAnalyzerResult(pv, id)
+      sender() ! result
     }
   }
   case class Analyze(analytics : Analytics, id : String)
