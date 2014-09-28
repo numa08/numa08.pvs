@@ -24,5 +24,5 @@ libraryDependencies ++= Seq(
 
 // configure
 libraryDependencies ++= Seq(
-  "com.twitter" % "util-eval_2.10" % "6.20.0"
+  "org.json4s" %% "json4s-native" % "3.2.10"
 )

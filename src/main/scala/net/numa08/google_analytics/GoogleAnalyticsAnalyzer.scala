@@ -1,14 +1,19 @@
 package net.numa08.google_analytics
 
+import java.io.File
 import java.util.Date
 
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.pattern.ask
 import akka.util.Timeout
+import com.google.api.client.auth.oauth2.Credential
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.analytics.Analytics
 import net.numa08.analyzer.{PVAnalyzer, PVAnalyzerResult}
 import net.numa08.google_analytics.Analyzer.Analyze
 import org.apache.commons.lang3.time.DateUtils
+import org.json4s.JValue
 
 import scala.collection.JavaConversions._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -66,4 +71,22 @@ protected trait AnalyticsQuery {
 
   def startDateQuery : String = queryDateString(startDate)
   def endDateQuery : String = queryDateString(endDate)
+}
+
+protected trait AnalyticsConfigure {
+
+  val httpTransport = GoogleNetHttpTransport.newTrustedTransport()
+  val jsonFactory = JacksonFactory.getDefaultInstance()
+
+  class CertificateFileNotFindError(m : String) extends Exception
+
+  def analyticsFromConfigure(json : JValue) : Either[Throwable, Analytics] = allCatch either {
+    val certificatePath = (json \ "google-analytics" \ "certificate_path").extract[String]
+    val certificateFile = new File(certificatePath)
+    if (!certificateFile.exists()) {
+      throw new CertificateFileNotFindError(s"$certificatePath is not exists")
+    }
+    val credential : Credential = ???
+    new Analytics.Builder(httpTransport, jsonFactory, credential).setApplicationName("numa08.pv").build()
+  }
 }
