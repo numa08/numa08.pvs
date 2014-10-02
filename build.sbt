@@ -14,7 +14,9 @@ libraryDependencies ++= Seq(
 
 // analyzers
 libraryDependencies ++= Seq(
-  "com.google.apis" % "google-api-services-analytics" % "v3-rev100-1.19.0"
+  "com.google.apis" % "google-api-services-analytics" % "v3-rev100-1.19.0",
+  "com.google.http-client" % "google-http-client-jackson2" % "1.19.0",
+  "com.google.oauth-client"  % "google-oauth-client-jetty" % "1.19.0"
 )
 
 // reporters
