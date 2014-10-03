@@ -25,6 +25,7 @@ import com.google.api.client.googleapis.auth.oauth2.{GoogleAuthorizationCodeFlow
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow.Builder
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver
+import com.typesafe.config.Config
 
 
 class GoogleAnalyticsAnalyzer extends PVAnalyzer with GoogleCredential {
@@ -32,8 +33,8 @@ class GoogleAnalyticsAnalyzer extends PVAnalyzer with GoogleCredential {
 
   case class CredentialFileNotFoundException(m : String) extends Exception(m)
 
-  def analyze(identifiers : List[String],configure : Map[String, String]) : List[Either[Throwable, PVAnalyzerResult]] = {
-    val credFilePath = configure("google.cred.file")
+  def analyze(config : Config) : List[Either[Throwable, PVAnalyzerResult]] = {
+    val credFilePath = config.getString("googleanalytics.credfile")
     val credFile = new File(credFilePath)
     if (!credFile.exists()) {
       throw new CredentialFileNotFoundException(s"Cred file donesn't exists at $credFilePath")
@@ -47,6 +48,7 @@ class GoogleAnalyticsAnalyzer extends PVAnalyzer with GoogleCredential {
     val actorSystem = ActorSystem.create("google-analytics")
     val actor = actorSystem.actorOf(Props[Analyzer], "analytics-analyzer")
     val analytics = new Analytics.Builder(transport, jsonFactory, credentials).setApplicationName("analytics-analyzer").build()
+    val identifiers = config.getStringList("googleanalytics.identifiers").toList
     val futures = identifiers.map{i => (actor ? Analyze(analytics, i)).mapTo[Either[Throwable, PVAnalyzerResult]]}
     Await.result(Future.sequence(futures), analyzeTimeout.duration)
   }

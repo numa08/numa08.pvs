@@ -26,7 +26,7 @@ libraryDependencies ++= Seq(
 
 // configure
 libraryDependencies ++= Seq(
-  "com.twitter" % "util-eval_2.10" % "6.20.0"
+  "com.typesafe" % "config" % "1.2.1"
 )
 
 scalacOptions ++= Seq("-feature")
