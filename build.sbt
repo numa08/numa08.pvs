@@ -28,3 +28,5 @@ libraryDependencies ++= Seq(
 libraryDependencies ++= Seq(
   "com.twitter" % "util-eval_2.10" % "6.20.0"
 )
+
+scalacOptions ++= Seq("-feature")
