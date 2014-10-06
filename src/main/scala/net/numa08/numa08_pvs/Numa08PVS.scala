@@ -1,13 +1,16 @@
 package net.numa08.numa08_pvs
 
+import net.numa08.analyzer.PVAnalyzerFactory
+import com.typesafe.config.ConfigFactory
+
 object Num08PVS {
 
   def main(args: Array[String]) :Unit = {
-    // val configure = new Configures("./numa08.configure")
+    val config = ConfigFactory.load
 
     // // analyze by google analytics
-    // val googleAnalytics = PVAnalyzerFactory.analyzerByName("google-analytics")
-    // val analyzeResults = googleAnalytics.analyze(configure.analyzeTargets)
+    val googleAnalytics = PVAnalyzerFactory.analyzerByName("google-analytics")
+    val analyzeResults = googleAnalytics.analyze(config)
 
     // // report to twitter
     // val twitter = PVReporterFactory.reporterByName("twitter")

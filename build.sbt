@@ -14,7 +14,9 @@ libraryDependencies ++= Seq(
 
 // analyzers
 libraryDependencies ++= Seq(
-  "com.google.apis" % "google-api-services-analytics" % "v3-rev100-1.19.0"
+  "com.google.apis" % "google-api-services-analytics" % "v3-rev100-1.19.0",
+  "com.google.http-client" % "google-http-client-jackson2" % "1.19.0",
+  "com.google.oauth-client"  % "google-oauth-client-jetty" % "1.19.0"
 )
 
 // reporters
@@ -24,5 +26,7 @@ libraryDependencies ++= Seq(
 
 // configure
 libraryDependencies ++= Seq(
-  "com.twitter" % "util-eval_2.10" % "6.20.0"
+  "com.typesafe" % "config" % "1.2.1"
 )
+
+scalacOptions ++= Seq("-feature")
